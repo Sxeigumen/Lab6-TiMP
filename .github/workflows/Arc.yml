@@ -22,6 +22,8 @@ jobs:
           release_name: Release ${{ github.ref }}
           body: |
             Upload archive and binary files for uploading
+          draft: false
+          prerelease: false
 
   Archives:
     needs: Release
