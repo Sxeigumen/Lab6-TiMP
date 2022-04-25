@@ -40,7 +40,7 @@ jobs:
     - name: Build achive files
       run : |
         mkdir cmake && cd cmake
-        cmake -DGENERATOR=ARC ..
+        cmake -DGENERATOR=ARCHIVE ..
         make
         cpack -G TGZ
         cpack -G ZIP
