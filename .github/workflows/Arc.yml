@@ -55,7 +55,7 @@ jobs:
        asset_name: Solver.tar.gz
        asset_content_type: files/tgz
        
-    - name: Upload ZIP
+    - name: Upload ZIP 
       uses: actions/upload-release-asset@v1
       env :
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
