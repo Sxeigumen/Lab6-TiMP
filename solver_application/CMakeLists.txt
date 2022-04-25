@@ -11,3 +11,6 @@ target_include_directories(equation PUBLIC ${CMAKE_CURRENT_SOURCE_DIR}/../solver
 
 target_link_libraries(equation formatter_ex)
 target_link_libraries(equation solver)
+
+include(Package.cmake)
+
