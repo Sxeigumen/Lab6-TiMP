@@ -21,13 +21,20 @@ set(CPACK_PACKAGE_VERSION_MAJOR 0)
 set(CPACK_PACKAGE_VERSION_MINOR 0)
 set(CPACK_PACKAGE_VERSION_PATCH 0)
 
+option(GENERATOR "")
+
+if(${GENERATOR} MATCHES BINARY)
 install(TARGETS solver DESTINATION bin)
+endif()
+
+if(${GENERATOR} MATCHES ARCHIVE)
 install(FILES equation.cpp 
                 ${CMAKE_CURRENT_SOURCE_DIR}/../formatter_lib/formatter.cpp
 		${CMAKE_CURRENT_SOURCE_DIR}/../formatter_ex_lib/formatter_ex.cpp
 		${CMAKE_CURRENT_SOURCE_DIR}/../solver_lib/solver.cpp
 		DESTINATION files)
 install(TARGETS formatter_ex solver LIBRARY DESTINATION libraries)
+endif()
 
 include(CPack)
 
