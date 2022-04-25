@@ -6,13 +6,13 @@ on:
       - main
       
 jobs:
-  Make_GitHub_Release:
+  Release:
     name   : Create Release
     runs-on: ubuntu-latest
     outputs:
       upload_url: ${{ steps.create_release.outputs.upload_url }}
     steps:
-                        
+              
     - name: Release
       id  : create_release
       uses: actions/create-release@v1
@@ -27,23 +27,31 @@ jobs:
           prerelease: false
 
   Archives:
-    needs: Make_GitHub_Release
+    needs: Release
     runs-on: ubuntu-latest
     
     steps:
-    - name: Git clone my repo
-      uses: actions/checkout@v1
+        
+    - uses: actions/checkout@v1
 
-    - name: Prepare environment
-      run : |
-        cmake --version
-    - name: Build achive files
+    - name: Archive
       run : |
         mkdir cmake && cd cmake
         cmake -DGENERATOR=ARCHIVE ..
         make
-        cpack -G TGZ
         cpack -G ZIP
+        cpack -G TGZ
+        
+        
+    - name: Upload ZIP 
+      uses: actions/upload-release-asset@v1
+      env :
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+      with: 
+       upload_url: ${{ needs.Make_GitHub_Release.outputs.upload_url }}
+       asset_path: ./cmake/solver-0.0.0-Linux.zip
+       asset_name: Solver.zip
+       asset_content_type: files/zip   
         
     - name: Upload TGZ
       uses: actions/upload-release-asset@v1
@@ -54,14 +62,4 @@ jobs:
        asset_path: ./cmake/solver-0.0.0-Linux.tar.gz
        asset_name: Solver.tar.gz
        asset_content_type: files/tgz
-       
-    - name: Upload ZIP 
-      uses: actions/upload-release-asset@v1
-      env :
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-      with: 
-       upload_url: ${{ needs.Make_GitHub_Release.outputs.upload_url }}
-       asset_path: ./cmake/solver-0.0.0-Linux.zip
-       asset_name: Solver.zip
-       asset_content_type: files/zip
     
