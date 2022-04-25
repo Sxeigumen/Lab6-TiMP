@@ -6,14 +6,15 @@ on:
       - main
       
 jobs:
-  Release:
-    name: Release
+  Make_GitHub_Release:
+    name   : Create Release
     runs-on: ubuntu-latest
     outputs:
       upload_url: ${{ steps.create_release.outputs.upload_url }}
     steps:
                         
     - name: Release
+      id  : create_release
       uses: actions/create-release@v1
       env :
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
@@ -26,7 +27,7 @@ jobs:
           prerelease: false
 
   Archives:
-    needs: Release
+    needs: Make_GitHub_Release
     runs-on: ubuntu-latest
     
     steps:
