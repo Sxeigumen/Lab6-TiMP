@@ -3,7 +3,7 @@ name: Formatter_application
 on:
   push:
       branches: 
-      - master
+      - main
   
 
 jobs:
