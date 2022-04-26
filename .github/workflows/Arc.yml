@@ -48,7 +48,7 @@ jobs:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
       with: 
        upload_url: ${{ needs.Release.outputs.upload_url }}
-       asset_path: ./cmake/solver-0.0.0-Linux.zip
+       asset_path: ./build/solver-0.0.0-Linux.zip
        asset_name: Solver.zip
        asset_content_type: files/zip   
         
@@ -58,7 +58,7 @@ jobs:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
       with: 
        upload_url: ${{ needs.Release.outputs.upload_url }}
-       asset_path: ./cmake/solver-0.0.0-Linux.tar.gz
+       asset_path: ./build/solver-0.0.0-Linux.tar.gz
        asset_name: Solver.tar.gz
        asset_content_type: files/tgz
        
@@ -86,7 +86,7 @@ jobs:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
       with: 
        upload_url: ${{ needs.Release.outputs.upload_url }}
-       asset_path: ./cmake/solver-0.0.0-Linux.deb
+       asset_path: ./build/solver-0.0.0-Linux.deb
        asset_name: solver_app.deb
        asset_content_type: files/deb
        
@@ -97,7 +97,7 @@ jobs:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
       with: 
        upload_url: ${{ needs.Release.outputs.upload_url }}
-       asset_path: ./cmake/solver-0.0.0-Linux.rpm
+       asset_path: ./build/solver-0.0.0-Linux.rpm
        asset_name: solver_app.rpm
        asset_content_type: files/rpm       
        
@@ -121,7 +121,7 @@ jobs:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
       with: 
        upload_url: ${{ needs.Release.outputs.upload_url }}
-       asset_path: ./cmake/solver-0.0.0-win64.msi
+       asset_path: ./build/solver-0.0.0-win64.msi
        asset_name: solver_app.msi
        asset_content_type: files/msi
 
@@ -144,6 +144,6 @@ jobs:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         with: 
           upload_url: ${{ needs.Release.outputs.upload_url }}
-          asset_path: ./cmake/solver-0.0.0-Darwin.dmg
+          asset_path: ./build/solver-0.0.0-Darwin.dmg
           asset_name: solver_app.dmg
           asset_content_type: files/dmg  
