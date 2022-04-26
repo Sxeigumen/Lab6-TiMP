@@ -120,7 +120,7 @@ jobs:
       env :
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
       with: 
-       upload_url: ${{ needs.Make_GitHub_Release.outputs.upload_url }}
+       upload_url: ${{ needs.Release.outputs.upload_url }}
        asset_path: ./cmake/solver-0.0.0-win64.msi
        asset_name: solver_app.msi
        asset_content_type: files/msi
@@ -144,7 +144,7 @@ jobs:
         env :
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         with: 
-          upload_url: ${{ needs.Make_GitHub_Release.outputs.upload_url }}
+          upload_url: ${{ needs.Release.outputs.upload_url }}
           asset_path: ./cmake/solver-0.0.0-Darwin.dmg
           asset_name: solver_app.dmg
           asset_content_type: files/dmg  
