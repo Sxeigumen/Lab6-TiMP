@@ -42,7 +42,7 @@ jobs:
         cpack -G TGZ
         
         
-    - name: Upload ZIP 
+    - name: ZIP_TO_RELEASE 
       uses: actions/upload-release-asset@v1
       env :
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
@@ -52,7 +52,7 @@ jobs:
        asset_name: Solver.zip
        asset_content_type: files/zip   
         
-    - name: Upload TGZ
+    - name: TGZ_TO_RELEASE
       uses: actions/upload-release-asset@v1
       env :
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
@@ -61,4 +61,46 @@ jobs:
        asset_path: ./cmake/solver-0.0.0-Linux.tar.gz
        asset_name: Solver.tar.gz
        asset_content_type: files/tgz
+       
+  Binary_Files:
+      needs: Release
+      runs-on: ubuntu-latest
+      
+      steps:
+      
+      - uses: actions/checkout@v1
+      
+      - name: Prepare environment
+        run : |
+          sudo apt-get install rpm
+          
+      - name: Create_Binary_Files
+        run : |
+          mkdir cmake && cd cmake
+          cmake -DGENERATOR=BINARY ..
+          make
+          cpack -G DEB
+          cpack -G RPM
+
+      - name: DEB_TO_RELEASE
+      
+        uses: actions/upload-release-asset@v1
+        env :
+            GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        with: 
+         upload_url: ${{ needs.Make_GitHub_Release.outputs.upload_url }}
+         asset_path: ./cmake/solver-1.0.0-Linux.deb
+         asset_name: solver_app.deb
+         asset_content_type: apps/deb
+
+      - name: RPM_TO_RELEASE
+
+        uses: actions/upload-release-asset@v1
+        env :
+            GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        with: 
+         upload_url: ${{ needs.Release.outputs.upload_url }}
+         asset_path: ./cmake/solver-1.0.0-Linux.rpm
+         asset_name: solver_app.rpm
+         asset_content_type: apps/rpm        
     
