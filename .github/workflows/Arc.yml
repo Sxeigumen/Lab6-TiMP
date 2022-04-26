@@ -8,13 +8,14 @@ on:
 jobs:
 
   Release:
-    name   : Create Release
+    name: Create Release
     runs-on: ubuntu-latest
     outputs:
       upload_url: ${{ steps.create_release.outputs.upload_url }}
       
     steps:        
     - name: Release
+      id: create_release
       uses: actions/create-release@v1
       env :
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
