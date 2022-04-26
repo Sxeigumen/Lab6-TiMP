@@ -24,6 +24,7 @@ set(CPACK_PACKAGE_VERSION_PATCH 0)
 option(GENERATOR "")
 
 if(${GENERATOR} MATCHES BINARY)
+set(CPACK_PACKAGE_CONTACT "Sxeigumen")
 install(TARGETS solver DESTINATION bin)
 endif()
 
