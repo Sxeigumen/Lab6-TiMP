@@ -6,15 +6,15 @@ on:
       - main
       
 jobs:
+
   Release:
     name   : Create Release
     runs-on: ubuntu-latest
     outputs:
       upload_url: ${{ steps.create_release.outputs.upload_url }}
-    steps:
-              
+      
+    steps:        
     - name: Release
-      id  : create_release
       uses: actions/create-release@v1
       env :
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
@@ -31,7 +31,6 @@ jobs:
     runs-on: ubuntu-latest
     
     steps:
-        
     - uses: actions/checkout@v1
     - name: Archive
       run : |
@@ -65,14 +64,14 @@ jobs:
   Binary_deb_rpm:
     needs: Release
     runs-on: ubuntu-latest
-    steps:
     
+    steps:
     - uses: actions/checkout@v1
     - name: Prepare environment
       run : |
         sudo apt-get install rpm
         
-    - name: Binary_Files
+    - name: Binary_File
       run : |
         mkdir cmake && cd cmake
         cmake -DGENERATOR=BINARY ..
@@ -105,9 +104,9 @@ jobs:
   Binary_msi:
     needs: Release
     runs-on: windows-latest
+    
     steps:
     - uses: actions/checkout@v1
-
     - name: Binary_File
       run : |
         mkdir cmake && cd cmake
@@ -131,7 +130,6 @@ jobs:
     
     steps:
       - uses: actions/checkout@v1
-
       - name: Build binary files
         run : |
           mkdir cmake && cd cmake
