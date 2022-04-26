@@ -62,7 +62,7 @@ jobs:
        asset_name: Solver.tar.gz
        asset_content_type: files/tgz
        
-  Linux_Binary:
+  Binary_deb_rpm:
     needs: Release
     runs-on: ubuntu-latest
     steps:
@@ -71,9 +71,9 @@ jobs:
 
     - name: Prepare environment
       run : |
-        cmake --version
         sudo apt-get install rpm
-    - name: Build binary files
+        
+    - name: Binary_Files
       run : |
         mkdir cmake && cd cmake
         cmake -DGENERATOR=BINARY ..
@@ -81,8 +81,7 @@ jobs:
         cpack -G DEB
         cpack -G RPM
         
-    - name: Upload DEB
-      id  : DEB
+    - name: DEB_TO_REALESE
       uses: actions/upload-release-asset@v1
       env :
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
@@ -92,8 +91,8 @@ jobs:
        asset_name: solver_app.deb
        asset_content_type: application/deb
        
-    - name: Upload RPM
-      id  : RPM
+       
+    - name: RPM_TO_REALESE
       uses: actions/upload-release-asset@v1
       env :
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
