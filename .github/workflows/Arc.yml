@@ -66,9 +66,8 @@ jobs:
     needs: Release
     runs-on: ubuntu-latest
     steps:
-    - name: Git clone my repo
-      uses: actions/checkout@v1
-
+    
+    - uses: actions/checkout@v1
     - name: Prepare environment
       run : |
         sudo apt-get install rpm
@@ -89,7 +88,7 @@ jobs:
        upload_url: ${{ needs.Release.outputs.upload_url }}
        asset_path: ./cmake/solver-0.0.0-Linux.deb
        asset_name: solver_app.deb
-       asset_content_type: application/deb
+       asset_content_type: files/deb
        
        
     - name: RPM_TO_REALESE
@@ -100,5 +99,52 @@ jobs:
        upload_url: ${{ needs.Release.outputs.upload_url }}
        asset_path: ./cmake/solver-0.0.0-Linux.rpm
        asset_name: solver_app.rpm
-       asset_content_type: application/rpm       
+       asset_content_type: files/rpm       
+       
+     
+  Binary_msi:
+    needs: Release
+    runs-on: windows-latest
+    steps:
+    - uses: actions/checkout@v1
+
+    - name: Binary_File
+      run : |
+        mkdir cmake && cd cmake
+        cmake -DGENERATOR=BINARY ..
+        cmake --build .
+        cpack -C CPackConfig.cmake -G WIX
+        
+    - name: MSI_TO_REALESE
+      uses: actions/upload-release-asset@v1
+      env :
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+      with: 
+       upload_url: ${{ needs.Make_GitHub_Release.outputs.upload_url }}
+       asset_path: ./cmake/solver-0.0.0-win64.msi
+       asset_name: solver_app.msi
+       asset_content_type: files/msi
+
+  Binary_dmg:    
+    needs: Release
+    runs-on: macos-latest
     
+    steps:
+      - uses: actions/checkout@v1
+
+      - name: Build binary files
+        run : |
+          mkdir cmake && cd cmake
+          cmake -DGENERATOR=BINARY ..
+          make
+          cpack -G DragNDrop
+          
+      - name: DMGTO_TO_REALESE
+        uses: actions/upload-release-asset@v1
+        env :
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        with: 
+          upload_url: ${{ needs.Make_GitHub_Release.outputs.upload_url }}
+          asset_path: ./cmake/solver-0.0.0-Darwin.dmg
+          asset_name: solver_app.dmg
+          asset_content_type: files/dmg  
