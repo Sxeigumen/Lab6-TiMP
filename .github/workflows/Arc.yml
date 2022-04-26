@@ -76,7 +76,7 @@ jobs:
     - name: Build binary files
       run : |
         mkdir cmake && cd cmake
-        cmake -DGENERATOR=BIN ..
+        cmake -DGENERATOR=BINARY ..
         make
         cpack -G DEB
         cpack -G RPM
