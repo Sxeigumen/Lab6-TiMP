@@ -33,10 +33,6 @@ jobs:
     steps:
         
     - uses: actions/checkout@v1
-    - name: Prepare environment
-      run : |
-        cmake --version
-
     - name: Archive
       run : |
         mkdir cmake && cd cmake
